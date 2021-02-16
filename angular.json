@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "zabudText"
+    }
+  },
+  "defaultProject": "zabudText",
+  "cli": {
+    "analytics": "f90a97a5-bf3e-419b-bf82-9d79bff84266"
+  }
 }
