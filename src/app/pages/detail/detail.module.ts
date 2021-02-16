@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [DetailComponent],
@@ -18,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
     MatToolbarModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSnackBarModule
   ]
 })
 export class DetailModule { }

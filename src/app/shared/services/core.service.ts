@@ -14,7 +14,7 @@ export class CoreService {
     );
   }
 
-  public postList(data){
+  public saveItem(data){
     return this.http.post('https://jsonplaceholder.typicode.com/photos', data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       responseType: 'text',

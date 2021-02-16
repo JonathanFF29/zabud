@@ -1,3 +1,28 @@
-table {
-  width: 100%;
+
+.tableGeneral{
+  padding: 20px 40px;
+  table {
+    width: 100%;
+
+  }
+  th, td {
+    overflow: hidden;
+    width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+
+.homeHeader {
+   display: flex;
+   align-content: center;
+   justify-content: center;
+   align-items: center;
+   height: 50px;
+
+   button {
+     background-color: grey;
+     color: white;
+   }
 }
