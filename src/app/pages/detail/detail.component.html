@@ -1,0 +1,41 @@
+<mat-toolbar color="primary">
+  <span class="fill-remaining-space">Add item </span>
+</mat-toolbar>
+
+<div class="container"  novalidate>
+  <form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)" class="form">
+
+    <mat-form-field class="form-element">
+      <input type="number" matInput placeholder="Album id" formControlName="albumId">
+      <mat-error *ngIf="!itemForm.controls['albumId'].valid && itemForm.controls['albumId'].touched">
+        Required field, must select an album id.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-element">
+      <input type="number" matInput placeholder="Title" formControlName="title">
+      <mat-error *ngIf="!itemForm.controls['title'].valid && itemForm.controls['title'].touched">
+        Required field, must put a title .
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-element">
+      <input type="text" matInput placeholder="Title" formControlName="url">
+      <mat-error *ngIf="!itemForm.controls['url'].valid && itemForm.controls['url'].touched">
+        Required field, must put a url for image .
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-element">
+      <input type="text" matInput placeholder="Title" formControlName="thumbnailUrl">
+      <mat-error *ngIf="!itemForm.controls['thumbnailUrl'].valid && itemForm.controls['thumbnailUrl'].touched">
+        Required field, must select a image .
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-element">
+      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!itemForm.valid">Submit Form</button>
+    </div>
+
+  </form>
+</div>
