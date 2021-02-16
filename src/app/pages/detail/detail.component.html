@@ -1,8 +1,8 @@
-<mat-toolbar color="primary">
-  <span class="fill-remaining-space">Add item </span>
+<mat-toolbar class="detailHeader">
+  <span class="fill-remaining-space">Add item Form </span>
 </mat-toolbar>
 
-<div class="container"  novalidate>
+<div class="container" novalidate>
   <form [formGroup]="itemForm" (ngSubmit)="onSubmit(itemForm.value)" class="form">
 
     <mat-form-field class="form-element">
@@ -13,28 +13,34 @@
     </mat-form-field>
 
     <mat-form-field class="form-element">
-      <input type="number" matInput placeholder="Title" formControlName="title">
+      <input type="text" matInput placeholder="Title" formControlName="title">
       <mat-error *ngIf="!itemForm.controls['title'].valid && itemForm.controls['title'].touched">
         Required field, must put a title .
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="form-element">
-      <input type="text" matInput placeholder="Title" formControlName="url">
+      <input type="text" matInput placeholder="Url" formControlName="url">
       <mat-error *ngIf="!itemForm.controls['url'].valid && itemForm.controls['url'].touched">
-        Required field, must put a url for image .
+        Required field, must put a valid url for image .
       </mat-error>
     </mat-form-field>
 
+    <input type="file" multiple="false" (change)="onFileChange($event)" id="mainDocument" accept="image/*"  hidden="true">
     <mat-form-field class="form-element">
-      <input type="text" matInput placeholder="Title" formControlName="thumbnailUrl">
+      <input type="text" (keyup)="update()" matInput placeholder="Thumbnail" formControlName="thumbnailUrl">
       <mat-error *ngIf="!itemForm.controls['thumbnailUrl'].valid && itemForm.controls['thumbnailUrl'].touched">
         Required field, must select a image .
       </mat-error>
     </mat-form-field>
 
-    <div class="form-element">
-      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!itemForm.valid">Submit Form</button>
+    <div class="img-content">
+      <img [src]="previewImg"  *ngIf="previewImg"/>
+    </div>
+
+    <div class="form-element-button">
+      <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!itemForm.valid">Submit
+        Form</button>
     </div>
 
   </form>

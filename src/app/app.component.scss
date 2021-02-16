@@ -1,0 +1,21 @@
+::ng-deep .mat-dialog-container {
+  text-align: center;
+  color: black;
+  background-color: white;
+
+  button {
+    background-color: #1ca170;
+    margin: 5px;
+    color: white;
+  }
+}
+
+th.mat-header-cell {
+  text-align: center;
+}
+
+::ng-deep .mat-snack-bar-container {
+  color: white;
+  background: black;
+}
+
