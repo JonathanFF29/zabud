@@ -4,6 +4,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { CoreService } from 'src/app/shared/services/core.service';
 import { Location } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Photos } from 'src/app/shared/model/photo.model';
 
 @Component({
   selector: 'app-detail',
@@ -14,9 +15,15 @@ export class DetailComponent implements OnInit {
 
   itemForm: FormGroup;
   previewImg: SafeUrl;
+  updateState: boolean = false;
+  stateName: string;
   constructor(private fb: FormBuilder, private sanitizer: DomSanitizer, private coreService: CoreService,
               private location: Location, public snackBar: MatSnackBar) {
+    this.initForm();
 
+  }
+
+  initForm(){
     const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/;
     this.itemForm = this.fb.group({
       albumId: ['', Validators.required],
@@ -26,10 +33,25 @@ export class DetailComponent implements OnInit {
       id: ['']
 
     });
-
   }
 
   ngOnInit(): void {
+    this.coreService.itemObservable.subscribe(data => {
+      this.initForm();
+      this.updateState = true;
+      this.itemForm.get('albumId').setValue(data.albumId);
+      this.itemForm.get('title').setValue(data.title);
+      this.itemForm.get('url').setValue(data.url);
+      this.itemForm.get('thumbnailUrl').setValue(data.thumbnailUrl);
+      this.itemForm.get('id').setValue(data.id);
+      this.previewImg = data.thumbnailUrl;
+    })
+
+    this.coreService.stateObservable.subscribe(data => {
+      this.updateState = data;
+      if (this.updateState) this.stateName = 'Update';
+      else this.stateName = 'Add';
+    })
   }
 
   onFileChange(event) {
@@ -46,11 +68,19 @@ export class DetailComponent implements OnInit {
   }
 
 
-  onSubmit(post) {
-    console.log('value group form', post)
-    this.coreService.saveItem(post).subscribe(result => {
-      this.updateList();
-    })
+  onSubmit(item) {
+
+    if(!this.updateState){
+      console.log('update state', this.updateState)
+      this.coreService.saveItem(item).subscribe(result => {
+        this.updateList();
+      })
+    } else {
+      console.log('update state', this.updateState)
+      this.coreService.updateItem(item).subscribe(result => {
+        this.updateList();
+      })
+    }
   }
 
   updateList() {
