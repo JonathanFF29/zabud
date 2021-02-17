@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, Inject, OnInit, Optional, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -20,9 +20,15 @@ export class HomeComponent implements OnInit {
   displayedColumns = ['albumId', 'id', 'title', 'url', 'thumbnailUrl', 'action'];
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private coreService: CoreService, public dialog: MatDialog, private router : Router ) { }
+  constructor(private coreService: CoreService, public dialog: MatDialog, private router : Router,
+              public dialogRef: MatDialogRef<DeleteItemComponent>,
+              @Optional() @Inject(MAT_DIALOG_DATA) public data: Photos ) { }
 
   ngOnInit(): void {
+    this.getListMethod();
+  }
+
+  getListMethod(){
     this.coreService.getList().subscribe((r) => {
       this.listaPhotos = r;
       this.dataSource = new MatTableDataSource( this.listaPhotos);
@@ -46,6 +52,7 @@ export class HomeComponent implements OnInit {
 
   deleteRowData(rowobj){
     this.coreService.deleteItem(rowobj.id).subscribe((r) => {
+      console.log('delete item', r)
       this.simulateDeleteItem(rowobj.id);
     }, error => {
     });
@@ -61,6 +68,13 @@ export class HomeComponent implements OnInit {
   }
 
   addItem() {
+    this.coreService.addItemState();
+    this.router.navigateByUrl('/detail');
+  }
+
+
+  editItem(element) {
+    this.coreService.editItemService(element);
     this.router.navigateByUrl('/detail');
   }
 
